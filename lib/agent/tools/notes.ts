@@ -4,7 +4,7 @@ import { addNote, getNotes, updateNote, deleteNote } from '@/lib/db';
 
 export const notesTool = tool({
   description:
-    'Manage executive notes, action items, and todos for Patrick. Use this to create, list, update, complete, or delete personal notes and tasks.',
+    'Manage executive notes, action items, and todos for the user. Use this to create, list, update, complete, or delete personal notes and tasks.',
   parameters: z.object({
     action: z
       .enum(['create', 'list', 'update', 'complete', 'delete'])

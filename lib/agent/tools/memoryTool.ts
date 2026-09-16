@@ -5,7 +5,7 @@ import { UserMemory } from '@/lib/types';
 
 export const memoryTool = tool({
   description:
-    'Manage long-term user memories and profile facts. Use this to remember personal preferences, important facts, instructions, or work context about Patrick so Nexa remembers them across all future sessions.',
+    'Manage long-term user memories and profile facts. Use this to remember personal preferences, important facts, instructions, or work context about the user so Nexa remembers them across all future sessions.',
   parameters: z.object({
     action: z.enum(['save', 'list', 'delete']).describe('Action to perform with memory'),
     content: z

@@ -38,7 +38,7 @@ export function SettingsModal({
   const [activeTab, setActiveTab] = useState<'profile' | 'memory' | 'notes' | 'model'>('profile');
 
   // Profile form state
-  const [name, setName] = useState(userContext.userName || 'Patrick');
+  const [name, setName] = useState(userContext.userName || 'Fred');
   const [location, setLocation] = useState(userContext.userLocation || 'Kampala, Uganda');
   const [profileSaved, setProfileSaved] = useState(false);
 
@@ -282,7 +282,7 @@ export function SettingsModal({
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full rounded-xl border border-white/10 bg-zinc-800 px-3 py-2 text-sm text-zinc-100 focus:border-blue-500 focus:outline-none"
-                    placeholder="Patrick"
+                    placeholder="Your Name"
                   />
                 </div>
 
@@ -327,7 +327,7 @@ export function SettingsModal({
                   type="text"
                   value={newMemoryText}
                   onChange={(e) => setNewMemoryText(e.target.value)}
-                  placeholder="Add a new preference or fact (e.g., 'Patrick prefers bullet points')..."
+                  placeholder="Add a new preference or fact (e.g., 'Prefers concise summaries in bullet points')..."
                   className="flex-1 rounded-xl border border-white/10 bg-zinc-800 px-3 py-2 text-xs text-zinc-100 focus:border-blue-500 focus:outline-none"
                 />
                 <select

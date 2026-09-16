@@ -156,10 +156,10 @@ export function Sidebar({
         >
           <div className="flex items-center gap-2.5">
             <div className="flex h-7 w-7 items-center justify-center rounded-full bg-linear-to-tr from-blue-600 to-indigo-600 text-white font-medium text-xs">
-              {userContext.userName ? userContext.userName.charAt(0).toUpperCase() : 'P'}
+              {userContext.userName ? userContext.userName.charAt(0).toUpperCase() : 'F'}
             </div>
             <div className="text-left">
-              <p className="font-medium text-zinc-200">{userContext.userName || 'Patrick'}</p>
+              <p className="font-medium text-zinc-200">{userContext.userName || 'Fred'}</p>
               <p className="text-[10px] text-zinc-500">Executive Profile</p>
             </div>
           </div>

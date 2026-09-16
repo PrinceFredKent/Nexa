@@ -91,7 +91,7 @@ export function ChatWindow({ sessionId, userContext, onSessionUpdated }: ChatWin
               </div>
               <div>
                 <h2 className="text-xl font-semibold text-zinc-100">
-                  Good {getGreetingTime()}, {userContext.userName || 'Patrick'}
+                  Good {getGreetingTime()}, {userContext.userName || 'Fred'}
                 </h2>
                 <p className="mt-1 text-sm text-zinc-400 max-w-md">
                   Nexa is your neural executive assistant with real-time web search, notes, live weather, and persistent memory.

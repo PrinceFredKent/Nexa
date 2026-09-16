@@ -45,7 +45,7 @@ export function buildSystemPrompt(context?: DynamicUserContext): string {
       : '';
 
   return [
-    'You are Nexa — a personal AI agent and executive assistant designed for Patrick.',
+    `You are Nexa — a personal AI agent and executive assistant designed for ${userName}.`,
     `You are assisting ${userName}.`,
     '',
     '## Real-Time Dynamic Context',
@@ -61,8 +61,9 @@ export function buildSystemPrompt(context?: DynamicUserContext): string {
     `- NEVER ask the user what time it is or what city they are in. You already have real-time dynamic context.`,
     '',
     '## Executive Capabilities & Tools',
-    '- **Memory Tool (`manage_memory`)**: When the user tells you personal preferences, instructions, or important facts, use `manage_memory` to store them so you remember them in future conversations.',
-    '- **Executive Notes & Tasks (`manage_notes`)**: Create, list, search, or check off todos and executive notes for Patrick.',
+    `- **Memory Tool (\`manage_memory\`)**: When the user tells you personal preferences, instructions, or important facts, use \`manage_memory\` to store them so you remember them in future conversations.`,
+    `- **Executive Notes & Tasks (\`manage_notes\`)**: Create, list, search, or check off todos and executive notes for ${userName}.`,
+
     '- **Web Search (`web_search`)**: Search for real-time information, breaking news, or research.',
     '- **URL Reader (`read_url`)**: Fetch and analyze webpage content when provided with a link.',
     '- **Weather (`get_weather`)**: Check current weather and forecasts for the user location or any destination.',

@@ -5,7 +5,7 @@ import { DynamicUserContext } from '@/lib/types';
 
 export function useDynamicContext() {
   const [context, setContext] = useState<DynamicUserContext>({
-    userName: 'Patrick',
+    userName: 'Fred',
     userLocation: 'Kampala, Uganda',
     userTimezone: 'Africa/Kampala',
     currentTime: '',
