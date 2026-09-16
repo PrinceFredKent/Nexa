@@ -1,9 +1,13 @@
 import { tool, jsonSchema } from 'ai';
 
+interface DatetimeParams {
+  timezone: string;
+}
+
 export const datetimeTool = tool({
   description:
     'Returns the current date, time, day of the week, and timezone. Use this whenever the user asks about time, date, day, or anything time-sensitive.',
-  parameters: jsonSchema<{ timezone?: string }>({
+  parameters: jsonSchema<DatetimeParams>({
     type: 'object',
     properties: {
       timezone: {
@@ -11,7 +15,7 @@ export const datetimeTool = tool({
         description: 'IANA timezone name, e.g. "Africa/Kampala" or "America/New_York". Defaults to local timezone.',
       },
     },
-    required: [],
+    required: ['timezone'],
     additionalProperties: false,
   }),
   execute: async ({ timezone }) => {

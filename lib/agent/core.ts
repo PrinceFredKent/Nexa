@@ -1,7 +1,7 @@
 import { streamText, CoreMessage, smoothStream } from 'ai';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createOpenAI } from '@ai-sdk/openai';
-import { tools } from './tools';
+import { tools } from './tools/index';
 import { buildSystemPrompt } from './prompts/system';
 import { DynamicUserContext, AgentConfig } from '@/lib/types';
 

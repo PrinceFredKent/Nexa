@@ -48,7 +48,7 @@ export const notesTool = tool({
         description: 'Completion status when updating or completing a task',
       },
     },
-    required: ['action'],
+    required: ['action', 'title', 'content', 'tags', 'isTodo', 'noteId', 'completed'],
     additionalProperties: false,
   }),
   execute: async ({ action, title, content, tags, isTodo = true, noteId, completed }) => {

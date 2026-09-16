@@ -34,7 +34,7 @@ export const memoryTool = tool({
         description: 'The memory ID to delete (required when action is "delete")',
       },
     },
-    required: ['action'],
+    required: ['action', 'content', 'category', 'memoryId'],
     additionalProperties: false,
   }),
   execute: async ({ action, content, category = 'general', memoryId }) => {

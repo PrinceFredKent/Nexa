@@ -25,7 +25,7 @@ export const weatherTool = tool({
         description: 'Longitude coordinates if available',
       },
     },
-    required: [],
+    required: ['location', 'latitude', 'longitude'],
     additionalProperties: false,
   }),
   execute: async ({ location = 'Kampala, Uganda', latitude, longitude }) => {
