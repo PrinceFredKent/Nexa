@@ -1,20 +1,28 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+function getSupabaseCredentials() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+  return { url, key };
+}
 
 export function isSupabaseConfigured(): boolean {
-  return Boolean(supabaseUrl && supabaseKey);
+  const { url, key } = getSupabaseCredentials();
+  return Boolean(url && key);
 }
 
 let supabaseInstance: SupabaseClient | null = null;
 
 export function getSupabaseClient(): SupabaseClient | null {
-  if (!isSupabaseConfigured()) {
+  const { url, key } = getSupabaseCredentials();
+  if (!url || !key) {
     return null;
   }
-  if (!supabaseInstance && supabaseUrl && supabaseKey) {
-    supabaseInstance = createClient(supabaseUrl, supabaseKey, {
+  if (!supabaseInstance) {
+    supabaseInstance = createClient(url, key, {
       auth: {
         persistSession: false,
       },
