@@ -14,7 +14,7 @@ interface TavilyResponse {
 
 export const webSearchTool = tool({
   description:
-    'Searches the web for up-to-date information. Use this for current events, facts you might not know, prices, news, or anything that may have changed after your training cutoff.',
+    'Searches the web for real-time information, facts, local news, weather, or current events.',
   parameters: jsonSchema<{ query: string }>({
     type: 'object',
     properties: {
@@ -55,10 +55,10 @@ export const webSearchTool = tool({
       return {
         query,
         answer: data.answer ?? null,
-        results: data.results.map((r) => ({
+        results: (data.results || []).map((r) => ({
           title: r.title,
           url: r.url,
-          snippet: r.content.slice(0, 400),
+          snippet: r.content?.slice(0, 400) || '',
         })),
       };
     } catch (err) {

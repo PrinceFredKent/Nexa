@@ -1,16 +1,32 @@
-import { tool } from 'ai';
-import { z } from 'zod';
+import { tool, jsonSchema } from 'ai';
+
+interface WeatherParams {
+  location?: string;
+  latitude?: number;
+  longitude?: number;
+}
 
 export const weatherTool = tool({
   description:
     'Get current live weather conditions and short-term forecast for any location or city. If location is omitted, uses the user current location.',
-  parameters: z.object({
-    location: z
-      .string()
-      .optional()
-      .describe('City, location, or country name (e.g. "Kampala", "London", "Tokyo").'),
-    latitude: z.number().optional().describe('Latitude coordinates if available'),
-    longitude: z.number().optional().describe('Longitude coordinates if available'),
+  parameters: jsonSchema<WeatherParams>({
+    type: 'object',
+    properties: {
+      location: {
+        type: 'string',
+        description: 'City, location, or country name (e.g. "Kampala", "London", "Tokyo").',
+      },
+      latitude: {
+        type: 'number',
+        description: 'Latitude coordinates if available',
+      },
+      longitude: {
+        type: 'number',
+        description: 'Longitude coordinates if available',
+      },
+    },
+    required: [],
+    additionalProperties: false,
   }),
   execute: async ({ location = 'Kampala, Uganda', latitude, longitude }) => {
     try {

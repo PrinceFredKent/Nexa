@@ -1,11 +1,22 @@
-import { tool } from 'ai';
-import { z } from 'zod';
+import { tool, jsonSchema } from 'ai';
+
+interface UrlReaderParams {
+  url: string;
+}
 
 export const urlReaderTool = tool({
   description:
     'Fetch and read the text content of a webpage or article given its URL. Use this when the user asks to analyze, summarize, or extract data from a specific website link.',
-  parameters: z.object({
-    url: z.string().url().describe('The full HTTP/HTTPS URL of the webpage to read'),
+  parameters: jsonSchema<UrlReaderParams>({
+    type: 'object',
+    properties: {
+      url: {
+        type: 'string',
+        description: 'The full HTTP/HTTPS URL of the webpage to read',
+      },
+    },
+    required: ['url'],
+    additionalProperties: false,
   }),
   execute: async ({ url }) => {
     try {
@@ -45,7 +56,7 @@ export const urlReaderTool = tool({
         .replace(/\s+/g, ' ')
         .trim();
 
-      // Limit length to ~12000 chars (~2500 words)
+      // Limit length to ~12000 chars
       if (cleanText.length > 12000) {
         cleanText = cleanText.substring(0, 12000) + '... [Content truncated for length]';
       }

@@ -1,25 +1,41 @@
-import { tool } from 'ai';
-import { z } from 'zod';
+import { tool, jsonSchema } from 'ai';
 import { addUserMemory, getUserMemories, deleteUserMemory } from '@/lib/db';
 import { UserMemory } from '@/lib/types';
+
+interface MemoryParams {
+  action: 'save' | 'list' | 'delete';
+  content?: string;
+  category?: 'preference' | 'personal' | 'work' | 'instruction' | 'general';
+  memoryId?: string;
+}
 
 export const memoryTool = tool({
   description:
     'Manage long-term user memories and profile facts. Use this to remember personal preferences, important facts, instructions, or work context about the user so Nexa remembers them across all future sessions.',
-  parameters: z.object({
-    action: z.enum(['save', 'list', 'delete']).describe('Action to perform with memory'),
-    content: z
-      .string()
-      .optional()
-      .describe('The fact or preference to remember (required when action is "save")'),
-    category: z
-      .enum(['preference', 'personal', 'work', 'instruction', 'general'])
-      .optional()
-      .describe('Category of the memory (defaults to "general")'),
-    memoryId: z
-      .string()
-      .optional()
-      .describe('The memory ID to delete (required when action is "delete")'),
+  parameters: jsonSchema<MemoryParams>({
+    type: 'object',
+    properties: {
+      action: {
+        type: 'string',
+        enum: ['save', 'list', 'delete'],
+        description: 'Action to perform with memory (save, list, delete)',
+      },
+      content: {
+        type: 'string',
+        description: 'The fact or preference to remember (required when action is "save")',
+      },
+      category: {
+        type: 'string',
+        enum: ['preference', 'personal', 'work', 'instruction', 'general'],
+        description: 'Category of the memory (defaults to "general")',
+      },
+      memoryId: {
+        type: 'string',
+        description: 'The memory ID to delete (required when action is "delete")',
+      },
+    },
+    required: ['action'],
+    additionalProperties: false,
   }),
   execute: async ({ action, content, category = 'general', memoryId }) => {
     try {

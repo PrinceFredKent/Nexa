@@ -1,14 +1,18 @@
-import { tool } from 'ai';
-import { z } from 'zod';
+import { tool, jsonSchema } from 'ai';
 
 export const datetimeTool = tool({
   description:
     'Returns the current date, time, day of the week, and timezone. Use this whenever the user asks about time, date, day, or anything time-sensitive.',
-  parameters: z.object({
-    timezone: z
-      .string()
-      .optional()
-      .describe('IANA timezone name, e.g. "Africa/Kampala" or "America/New_York". Defaults to local timezone.'),
+  parameters: jsonSchema<{ timezone?: string }>({
+    type: 'object',
+    properties: {
+      timezone: {
+        type: 'string',
+        description: 'IANA timezone name, e.g. "Africa/Kampala" or "America/New_York". Defaults to local timezone.',
+      },
+    },
+    required: [],
+    additionalProperties: false,
   }),
   execute: async ({ timezone }) => {
     const now = new Date();

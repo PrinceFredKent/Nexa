@@ -3,7 +3,7 @@ import { evaluate } from 'mathjs';
 
 export const calculatorTool = tool({
   description:
-    'Evaluates a mathematical expression and returns the result. Use this for any arithmetic, algebra, or numeric calculation. Do NOT use this for currency conversions or real-time data.',
+    'Evaluates a mathematical expression and returns the result. Use this for any arithmetic, algebra, or numeric calculation.',
   parameters: jsonSchema<{ expression: string }>({
     type: 'object',
     properties: {

@@ -1,23 +1,55 @@
-import { tool } from 'ai';
-import { z } from 'zod';
+import { tool, jsonSchema } from 'ai';
 import { addNote, getNotes, updateNote, deleteNote } from '@/lib/db';
+
+interface NotesParams {
+  action: 'create' | 'list' | 'update' | 'complete' | 'delete';
+  title?: string;
+  content?: string;
+  tags?: string[];
+  isTodo?: boolean;
+  noteId?: string;
+  completed?: boolean;
+}
 
 export const notesTool = tool({
   description:
     'Manage executive notes, action items, and todos for the user. Use this to create, list, update, complete, or delete personal notes and tasks.',
-  parameters: z.object({
-    action: z
-      .enum(['create', 'list', 'update', 'complete', 'delete'])
-      .describe('Action to perform'),
-    title: z.string().optional().describe('Title of the note or task (required for "create")'),
-    content: z.string().optional().describe('Details / content of the note'),
-    tags: z.array(z.string()).optional().describe('Tags or labels (e.g., ["urgent", "work"])'),
-    isTodo: z.boolean().optional().describe('Whether this is a todo/task item (default true)'),
-    noteId: z.string().optional().describe('ID of the note to update, complete, or delete'),
-    completed: z
-      .boolean()
-      .optional()
-      .describe('Completion status when updating or completing a task'),
+  parameters: jsonSchema<NotesParams>({
+    type: 'object',
+    properties: {
+      action: {
+        type: 'string',
+        enum: ['create', 'list', 'update', 'complete', 'delete'],
+        description: 'Action to perform',
+      },
+      title: {
+        type: 'string',
+        description: 'Title of the note or task (required for "create")',
+      },
+      content: {
+        type: 'string',
+        description: 'Details / content of the note',
+      },
+      tags: {
+        type: 'array',
+        items: { type: 'string' },
+        description: 'Tags or labels (e.g. ["urgent", "work"])',
+      },
+      isTodo: {
+        type: 'boolean',
+        description: 'Whether this is a todo/task item (default true)',
+      },
+      noteId: {
+        type: 'string',
+        description: 'ID of the note to update, complete, or delete',
+      },
+      completed: {
+        type: 'boolean',
+        description: 'Completion status when updating or completing a task',
+      },
+    },
+    required: ['action'],
+    additionalProperties: false,
   }),
   execute: async ({ action, title, content, tags, isTodo = true, noteId, completed }) => {
     try {
